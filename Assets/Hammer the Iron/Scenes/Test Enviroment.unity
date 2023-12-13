@@ -167,8 +167,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.32488266, z: 1}
-  m_Center: {x: 0, y: -0.33755863, z: 0}
+  m_Size: {x: 1, y: 0.7065857, z: 1}
+  m_Center: {x: 0, y: -0.1467071, z: 0}
 --- !u!114 &8180648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3912c480fd710540ab52fac51db081d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingot: {fileID: 1747200095401439650, guid: 5b459e0041eef2a4da783a6ea6f7b052, type: 3}
+  material: {fileID: 0}
+  colors:
+  - {r: 0.6039216, g: 0.6039216, b: 0.6039216, a: 0}
+  - {r: 1, g: 0.023584902, b: 0.023584902, a: 0}
 --- !u!1 &40810684
 GameObject:
   m_ObjectHideFlags: 0
@@ -3556,6 +3559,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1295683941}
     m_Modifications:
+    - target: {fileID: 3973022305717756529, guid: a8281387f63b2554b8be8fdc4a8685f2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1daa8fca0012f3b42987a430043485c6, type: 2}
     - target: {fileID: 3973022305717756530, guid: a8281387f63b2554b8be8fdc4a8685f2, type: 3}
       propertyPath: m_InteractionManager
       value: 
