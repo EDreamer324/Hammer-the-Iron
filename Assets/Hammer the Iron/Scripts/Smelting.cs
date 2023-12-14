@@ -9,20 +9,24 @@ public class Smelting : MonoBehaviour
     //Variables used by the color shifting function
     [SerializeField] private Material material;
     [SerializeField] private Color[] colors;
+    [SerializeField] private Color lerpedColor;
     private int startingColorIndex = 0;
     private int targetColorIndex = 1;
-    private float currentColorIndex;
+    private float timeSpentLerping = 0;
+    private float timeToLerp = 5;
+    int timesColorShifted;
+
 
     private void OnTriggerEnter(Collider other)
     {
         material = other.GetComponent<Renderer>().material;
-        //colors.Add(material.GetColor("_Color"));
         MetalHeatingUp();
     }
 
     private void OnTriggerExit()
     {
         MetalCoolingDown();
+        material = null;
     }
 
     /// <summary>
@@ -30,11 +34,16 @@ public class Smelting : MonoBehaviour
     /// </summary>
     private void MetalHeatingUp()
     {
-        //while (currentColorIndex < 1)
-        //{
-            currentColorIndex += Time.fixedTime;
-            material.color = Color.Lerp(colors[startingColorIndex], colors[targetColorIndex], currentColorIndex);
-        //}
+        while (timeSpentLerping < timeToLerp)
+        {
+            timeSpentLerping += Time.deltaTime;
+
+            material.color = Color.Lerp(material.color, colors[targetColorIndex], timeSpentLerping);
+
+            timesColorShifted++;
+        }
+        Debug.Log("Color has shifted " + timesColorShifted + " times");
+        timesColorShifted = 0;
     }
 
     /// <summary>
@@ -42,10 +51,12 @@ public class Smelting : MonoBehaviour
     /// </summary>
     private void MetalCoolingDown()
     {
-        while (currentColorIndex > 0)
+        lerpedColor = Color.black;
+
+        while (timeSpentLerping > 0)
         {
-            currentColorIndex -= Time.deltaTime;
-            material.color = Color.Lerp(colors[startingColorIndex], colors[targetColorIndex], currentColorIndex);
+            timeSpentLerping -= Time.deltaTime;
+            material.color = Color.Lerp(colors[startingColorIndex], colors[targetColorIndex], timeSpentLerping / timeToLerp);
         }
     }
 }
