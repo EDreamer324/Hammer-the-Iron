@@ -20,11 +20,6 @@ public class Smelting : MonoBehaviour
         StartCoroutine(LerpToTargetColor());
     }
 
-    private void OnTriggerExit()
-    {
-        StartCoroutine(LerpBackToOriginalColor());
-    }
-
     IEnumerator LerpToTargetColor()
     {
         Debug.Log("heating started!");
@@ -34,6 +29,8 @@ public class Smelting : MonoBehaviour
 
         Color lerpedColor = Color.white;
 
+        //The loop interpolates the values between the original color and the target color,
+        //transitioning to the target color over time
         while (elapsedFrames < lerpDuration)
         {
             float t = elapsedFrames / lerpDuration;
@@ -51,38 +48,8 @@ public class Smelting : MonoBehaviour
         timesLerped = 0;
     }
 
-    /// <summary>
-    /// Lerps the color back to the original color
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator LerpBackToOriginalColor()
-    {
-        Debug.Log("cooling started!");
-
-        float elapsedFrames = 0;
-        int originalColorIndex = 0;
-        Color lerpedColor = Color.white;
-
-        while (elapsedFrames < lerpDuration)
-        {
-            float t = elapsedFrames / lerpDuration;
-
-            lerpedColor = Color.Lerp(objectMaterial.color, lerpColors[originalColorIndex], InOutQuint(t));
-            elapsedFrames += Time.fixedDeltaTime;
-
-            objectMaterial.SetColor("_Color", lerpedColor);
-
-            timesLerped++;
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        Debug.Log("Color lerped " + timesLerped + " times!");
-        timesLerped = 0;
-
-    }
-
-    public static float InQuint(float t) => Mathf.Pow(t, 3);
+    //2 different EaseIn functions to experiment with the lerp function
+    public static float InQuint(float t) => Mathf.Pow(t, 5);
     public static float InOutQuint(float t)
 		{
 			if (t < 0.5) return InQuint(t * 2) / 2;
